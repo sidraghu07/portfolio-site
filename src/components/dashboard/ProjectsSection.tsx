@@ -12,7 +12,7 @@ export function ProjectsSection() {
           ~/projects
         </span>
         <h2 className="mt-6 font-display text-3xl font-bold text-ink sm:text-4xl">
-          Shipped builds
+          Published Projects
         </h2>
       </Reveal>
 
