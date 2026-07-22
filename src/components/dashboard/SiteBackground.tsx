@@ -31,9 +31,9 @@ export function SiteBackground() {
   const [expanded, setExpanded] = useState(false);
   const [clearing, setClearing] = useState(false);
   const [snakeTrail, setSnakeTrail] = useState<Cell[]>([]);
+  const [snakeStep, setSnakeStep] = useState(16);
   const activeColorRef = useRef<string | null>(null);
   const clearingRef = useRef(false);
-  const snakeStepRef = useRef(16);
   const snakeTimeoutRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -76,7 +76,8 @@ export function SiteBackground() {
     clearingRef.current = true;
     setClearing(true);
     const targetDuration = Math.min(2200, Math.max(500, path.length * 14));
-    snakeStepRef.current = Math.max(4, targetDuration / path.length);
+    const stepMs = Math.max(4, targetDuration / path.length);
+    setSnakeStep(stepMs);
 
     let i = 0;
     const tick = () => {
@@ -95,7 +96,7 @@ export function SiteBackground() {
         return idx === -1 ? prev : prev.filter((p) => p.key !== key);
       });
       i++;
-      snakeTimeoutRef.current = window.setTimeout(tick, snakeStepRef.current);
+      snakeTimeoutRef.current = window.setTimeout(tick, stepMs);
     };
     tick();
   }
@@ -191,7 +192,7 @@ export function SiteBackground() {
               width: CELL,
               height: CELL,
               transform: `translate(${seg.cx * CELL}px, ${seg.cy * CELL}px)`,
-              transitionDuration: `${snakeStepRef.current}ms`,
+              transitionDuration: `${snakeStep}ms`,
               background: i === 0 ? "var(--ink)" : hexToRgba("#17140F", Math.max(0.1, 0.5 - i * 0.1)),
               zIndex: 5 - i,
             }}

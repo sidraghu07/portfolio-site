@@ -38,9 +38,6 @@ export function Reveal({
     );
     observer.observe(el);
 
-    // Safety net: never let content stay permanently hidden if the
-    // observer doesn't fire for some reason (e.g. element never
-    // intersects because it's off the initial viewport in an unusual layout).
     const fallback = setTimeout(() => setVisible(true), 2000);
 
     return () => {
